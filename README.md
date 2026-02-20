@@ -134,6 +134,6 @@ Three tests are intentionally designed to fail. They document security vulnerabi
 - **Single user in scope:** Only `standard_user` is tested. Alternative accounts (`locked_out_user`, etc.) are explicitly out of scope and documented in the Test Plan.
 - **Static frontend:** SauceDemo does not send real POST requests on login. The API security test for payload inspection documents the expected behavior for a production app.
 - **No real transactions:** Checkout is simulated. No payment gateway is involved.
-- **Manual state reset:** Cart state persists between sessions and can be reset it using a menu option.
+- **Manual state reset:** Cart state persists between sessions and can be manually reset using a menu option.
 - **Credentials:** Hardcoded for this challenge only. In a production setup, credentials must be stored in environment variables (`.env`).
 - **Browser strategy:** Smoke gate runs on Chromium only for CI/CD speed. Firefox and WebKit are available via `npm run test:full` for scheduled or pre-release validation.
