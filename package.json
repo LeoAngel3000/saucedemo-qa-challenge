@@ -1,0 +1,17 @@
+{
+  "name": "saucedemo-qa-challenge",
+  "version": "1.0.0",
+  "description": "Senior QA Engineer Challenge — SauceDemo E-Commerce Platform",
+  "scripts": {
+    "test": "playwright test --project=chromium",
+    "test:smoke": "playwright test --project=chromium",
+    "test:full": "playwright test",
+    "test:api": "playwright test tests/api-security.spec.ts --project=chromium",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.41.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
