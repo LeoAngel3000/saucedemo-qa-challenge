@@ -1,0 +1,53 @@
+name: Playwright Smoke Tests
+
+# Triggers: run on every push and pull request to main
+# This acts as the CI/CD gate — if these tests fail, the commit is flagged
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Run Smoke Tests (Chromium)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js — must match the version requirement in package.json
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # 3. Install project dependencies (uses package-lock.json for reproducible installs)
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Install Playwright browser binaries and OS-level dependencies
+      # --with-deps installs system libraries required by Chromium on Ubuntu
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # 5. Run the smoke gate tests
+      # The CI environment variable is set automatically by GitHub Actions,
+      # which triggers the workers: 2 configuration in playwright.config.ts
+      - name: Run smoke tests
+        run: npm test
+
+      # 6. Upload the HTML report as an artifact so it can be downloaded
+      # after the run — useful for debugging failures in CI
+      # This step runs even if tests fail (always: true)
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
