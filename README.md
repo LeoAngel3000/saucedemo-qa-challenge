@@ -11,7 +11,7 @@ Senior QA Engineer Challenge — E-Commerce Platform Testing
 saucedemo-qa-challenge/
 ├── .gitignore
 ├── README.md
-├── TestPlan_SauceDemo.odt     # Full test plan document
+├── TestPlan_SauceDemo.pdf      # Full test plan document
 ├── playwright.config.ts        # Browser configuration and project matrix
 ├── package.json
 ├── tsconfig.json
