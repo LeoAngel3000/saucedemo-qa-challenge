@@ -1,16 +1,21 @@
 import { Page, Locator } from '@playwright/test';
+import { BasePage } from './BasePage';
+import { ROUTES } from '../tests/test-data';
 
-export class CartPage {
-  readonly page: Page;
+export class CartPage extends BasePage {
   readonly cartItems: Locator;
   readonly checkoutButton: Locator;
   readonly removeButtons: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.cartItems = page.locator('[data-test="inventory-item"]');
     this.checkoutButton = page.locator('[data-test="checkout"]');
     this.removeButtons = page.locator('[data-test^="remove"]');
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(ROUTES.cart);
   }
 
   // --- Base method: index-driven access ---

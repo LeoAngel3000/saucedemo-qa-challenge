@@ -28,10 +28,11 @@ export const SHIPPING = {
   postalCode: '10001',
 };
 
-// Routes used in navigation and access control tests
+// Routes used in navigation, goto() methods, and access control tests.
+// All Page Objects import from here — no hardcoded URLs anywhere else.
 export const ROUTES = {
   login: '/',
   inventory: '/inventory.html',
-  cart: '/cart.html',
+  cart: '/cart.html',               // Added: used by CartPage.goto()
   checkoutStep1: '/checkout-step-one.html',
 };

@@ -1,20 +1,21 @@
 import { Page, Locator } from '@playwright/test';
+import { BasePage } from './BasePage';
+import { ROUTES } from '../tests/test-data';
 
-export class InventoryPage {
-  readonly page: Page;
+export class InventoryPage extends BasePage {
   readonly cartBadge: Locator;
   readonly cartLink: Locator;
   readonly inventoryItems: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.cartBadge = page.locator('[data-test="shopping-cart-badge"]');
     this.cartLink = page.locator('[data-test="shopping-cart-link"]');
     this.inventoryItems = page.locator('[data-test="inventory-item"]');
   }
 
-  async goto() {
-    await this.page.goto('/inventory.html');
+  async goto(): Promise<void> {
+    await this.page.goto(ROUTES.inventory);
   }
 
   // --- Base method: index-driven cart addition ---
@@ -24,7 +25,7 @@ export class InventoryPage {
   async addProductToCart(index: number): Promise<{ name: string; price: string }> {
     const item = this.inventoryItems.nth(index);
     const name = await item.locator('[data-test="inventory-item-name"]').innerText();
-    const price = await item.locator('[data-test="inventory-item-price"]').innerText(); 
+    const price = await item.locator('[data-test="inventory-item-price"]').innerText();
     await item.locator('[data-test^="add-to-cart-"]').click();
     return { name, price };
   }
