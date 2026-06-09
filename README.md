@@ -16,6 +16,7 @@ saucedemo-qa-challenge/
 ├── package.json
 ├── tsconfig.json
 ├── pages/                      # Page Object Model (POM)
+│   ├── BasePage.ts
 │   ├── LoginPage.ts
 │   ├── InventoryPage.ts        # Includes index-based product selection pattern
 │   ├── CartPage.ts             # Includes getItemByIndex abstraction
@@ -126,6 +127,9 @@ Three tests are intentionally designed to fail. They document security vulnerabi
 **Centralized test data.** All credentials, routes, and form data live in `tests/test-data.ts`. SauceDemo exposes multiple test users that all share a single password — the data structure reflects this relationship explicitly, making it easy to extend to other users in the future.
 
 **Index-based POM abstraction.** `CartPage` and `InventoryPage` expose a base method that accepts an index parameter (`getItemByIndex`, `addProductToCart`), with semantic convenience methods built on top (`getFirstItemName`, `addRandomProductToCart`). This pattern keeps implementation details encapsulated while making test code read like natural language.
+
+**BasePage as shared contract.** All Page Objects extend an abstract `BasePage` class that centralizes the `page` instance, common utility methods (`getErrorMessage`, `waitForURL`, `getPageTitle`), and enforces a `goto()` contract on every subclass. This eliminates constructor duplication across pages and ensures any future Page Object is navigable by design.
+
 
 ---
 
